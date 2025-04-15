@@ -1,35 +1,63 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Form from './assets/components/Form'
+import Tables from './assets/components/Tables';
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [expenses, setExpenses] = useState([
+    {
+      id: 1,
+      description: "Gym Membership",
+      amount: 4500,
+      date: "2025-05-01",
+      category: "Health"
+    },
+    {
+      id: 2,
+      description: "Movie Tickets",
+      amount: 3000,
+      date: "2025-04-15",
+      category: "Entertainment"
+    },
+    {
+      id: 3,
+      description: "Internet Bill",
+      amount: 7500,
+      date: "2025-04-10",
+      category: "Utilities"
+    },
+    {
+      id: 4,
+      description: "New Shoes",
+      amount: 12500,
+      date: "2025-04-12",
+      category: "Clothing"
+    }
+  ]);
+
+  const handleAddExpense = (newExpense) => {
+    setExpenses([...expenses, newExpense]);
+  };
+
+  const handleDeleteExpense = (id) => {
+    setExpenses(expenses.filter(expense => expense.id !== id));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="expense-tracker-container">
+      <h1>Expense Tracker</h1>
+      <p> start taking control of your finances and life, records, track and analyze your spending</p>
+      <div className="expense-tracker-content">
+        <Form onAddExpense={handleAddExpense} />
+
+        <Tables
+          expenses={expenses} onDeleteExpense={handleDeleteExpense} 
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
-export default App
+export default App;
